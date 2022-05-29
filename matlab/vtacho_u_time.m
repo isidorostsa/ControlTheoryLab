@@ -7,9 +7,6 @@ function [vtacho u time] = vtacho_u_time (a, u_value)
     % u_value must E[0, 5]
 
 
-    time = [];
-    time(1) = 0;
-
     v_tacho = [];
     u = [];
 
