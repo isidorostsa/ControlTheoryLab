@@ -1,4 +1,4 @@
-function [vtacho u time] vtacho_u_time (a, u_value)
+function [vtacho u time] = vtacho_u_time (a, u_value)
     writePWMVoltage(a, 'D9', 0); 
     writePWMVoltage(a, 'D6', 0); 
 
@@ -14,11 +14,13 @@ function [vtacho u time] vtacho_u_time (a, u_value)
     u = [];
 
     writePWMVoltage(a, 'D9', u_value)
-    time_start = tic;
 
     % maybe use while(time(end) < someTimeframe)
 
     iter = 0;
+
+    time = [];
+    tic
     while(iter < 100)
         iter = iter+1 
 
@@ -27,7 +29,9 @@ function [vtacho u time] vtacho_u_time (a, u_value)
 
         vtacho(end+1) = vtacho_reading
         u(end+1) = u_value
-        time(end+1) = toc;
+
+        time_passed = toc;
+        time(end+1) = time_passed;
     end
 
     % max(vtacho)/u_value = km*kt
