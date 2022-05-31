@@ -8,7 +8,12 @@ function [w theta v_tacho u time] = vtacho_u_time(a, u_value)
 
     % Ki (theta -> volt before reduction by 1/3)
     % calculate by setting potentiometer to pi/2 rad and measuring voltage
-    Ki = 12.5/(2*pi);
+    Ki = 1.946;
+    
+    Ku = 1/36;
+    
+    Km = 297.5;
+    Kt = 0.0029;
 
     % calculating manually TODO
     V_7805 = 2*readVoltage(a, 'A3');
@@ -21,8 +26,9 @@ function [w theta v_tacho u time] = vtacho_u_time(a, u_value)
 
     writePWMVoltage(a, 'D6', u_value)
     
+    iter = 0;
     tic;
-    while(iter < 100)
+    while(iter < 200)
         iter = iter+1;
 
         % in rads
@@ -35,7 +41,7 @@ function [w theta v_tacho u time] = vtacho_u_time(a, u_value)
         w_curr = v_tacho_curr*(1/Kt) 
 
         % now in rad/s
-        w_curr = w_curr*Ko
+        w_curr = w_curr*Ko*Ku
 
         theta(end+1) = theta_curr;
         v_tacho(end+1) = v_tacho_curr;

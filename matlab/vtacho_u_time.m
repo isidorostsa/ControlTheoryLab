@@ -5,9 +5,7 @@ function [vtacho u time] = vtacho_u_time (a, u_value)
     disp(['Connect cable from Arduino to Input Power Amplifier and then press enter to start controller']);
 
     % u_value must E[0, 5]
-
-
-    v_tacho = [];
+    vtacho = [];
     u = [];
 
     writePWMVoltage(a, 'D9', u_value)
@@ -35,5 +33,5 @@ function [vtacho u time] = vtacho_u_time (a, u_value)
     % i think: plot(vtacho, time) works well
 
     writePWMVoltage(a, 'D9', 0);
-    writePWMVoltage(a, 'D6', 0); 
+    writePWMVoltage(a, 'D6', 0);
 end
